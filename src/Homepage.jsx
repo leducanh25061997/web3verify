@@ -120,7 +120,7 @@ function Homepage() {
               width={24}
               height={24}
             />
-            Connect Wallet
+            {account ? formatAddress(account) : `Connect Wallet`}
           </button>
         </div>
       </header>
@@ -207,14 +207,14 @@ function Homepage() {
                 <div id="walletNotConnected" className='flex flex-col justify-center items-center text-center py-8'>
                   <FaWallet className='text-gray-400 w-9 h-9' />
                   <p className='text-gray-400 mb-4'>No wallet connected</p>
-                  <button onClick={() => connect({ connector: injected() })} className="font-medium flex justify-center items-center gap-2 px-4 py-2 bg-[#f3f4f6] text-gray-800 rounded-full w-full hover:bg-[#e5e7eb]">
+                  <button onClick={connectWallet} className="font-medium flex justify-center items-center gap-2 px-4 py-2 bg-[#f3f4f6] text-gray-800 rounded-full w-full hover:bg-[#e5e7eb]">
                     <img
                       src={ETHEREUM_BLACK_ICON}
                       alt='Metamask Icon'
                       width={20}
                       height={20}
                     />
-                    Connect Wallet
+                    {account ? formatAddress(account) : `Connect Wallet`}
                   </button>
                 </div>
               </div>
