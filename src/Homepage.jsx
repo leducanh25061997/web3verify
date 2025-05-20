@@ -120,7 +120,7 @@ function Homepage() {
               width={24}
               height={24}
             />
-            {account ? formatAddress(account) : `Connect Wallet`}
+            {account ? formatAddress(account) : `Connect Wallet 1`}
           </button>
         </div>
       </header>
