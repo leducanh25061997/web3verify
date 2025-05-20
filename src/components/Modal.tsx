@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ETHEREUM_ICON from '../assets/ethereum.png'
-import { FaRegIdCard, FaRegImage, FaVideo } from "react-icons/fa";
+import { FaRegIdCard, FaRegImage } from "react-icons/fa";
 import '../index.css'
 
 interface Props {
@@ -15,20 +15,20 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
   const [uploadProgress, setUploadProgress] = useState(0);
   // const videoRef: any = useRef(null);
   // const videoRef1: any = useRef(null);
-  const canvasRef = useRef(null);
+  // const canvasRef = useRef(null);
   // const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   // const [isCameraOn1, setIsCameraOn1] = useState<boolean>(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [recording, setRecording] = useState(false);
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  // const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const chunks = useRef<Blob[]>([]);
 
   const videoRef1 = useRef<HTMLVideoElement | null>(null);
   const mediaRecorderRef1 = useRef<MediaRecorder | null>(null);
   const [recording1, setRecording1] = useState(false);
-  const [videoUrl1, setVideoUrl1] = useState<string | null>(null);
+  // const [videoUrl1, setVideoUrl1] = useState<string | null>(null);
   const chunks1 = useRef<Blob[]>([]);
 
   useEffect(() => {
@@ -55,21 +55,6 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
     setFile(selectedFile);
     setPreviewUrl(preview);
     setUploadProgress(0);  // Reset progress bar
-  };
-
-  const handleUpload = () => {
-    // const fakeUpload = setInterval(() => {
-    //   setUploadProgress((prevProgress) => {
-    //     if (prevProgress >= 100) {
-    //       clearInterval(fakeUpload);
-    //       alert(`Uploaded ${file.name} successfully!`);
-    //       setFile(null);
-    //       setPreviewUrl(null);
-    //       return 0;
-    //     }
-    //     return prevProgress + 10;
-    //   });
-    // }, 300);
   };
 
   // Bắt đầu camera
@@ -138,9 +123,9 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks.current, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        setVideoUrl(url);
+        // const blob = new Blob(chunks.current, { type: 'video/webm' });
+        // const url = URL.createObjectURL(blob);
+        // setVideoUrl(url);
 
         // Dừng stream
         stream.getTracks().forEach(track => track.stop());
@@ -179,9 +164,9 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
       };
 
       mediaRecorder.onstop = () => {
-        const blob = new Blob(chunks1.current, { type: 'video/webm' });
-        const url = URL.createObjectURL(blob);
-        setVideoUrl1(url);
+        // const blob = new Blob(chunks1.current, { type: 'video/webm' });
+        // const url = URL.createObjectURL(blob);
+        // setVideoUrl1(url);
 
         // Dừng stream
         stream.getTracks().forEach(track => track.stop());

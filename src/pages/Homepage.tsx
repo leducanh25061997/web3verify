@@ -46,9 +46,9 @@ function Homepage() {
   console.log(copySuccess, 'copySuccess')
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [account, setAccount] = useState(null);
-  const [balance, setBalance] = useState(null);
-  const [error, setError] = useState(null);
+  // const [account, setAccount] = useState(null);
+  // const [balance, setBalance] = useState(null);
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -78,15 +78,6 @@ function Homepage() {
       .catch(() => setCopySuccess('Failed to copy!'));
 
     setTimeout(() => setCopySuccess(''), 2000);  // Reset message after 2s
-  };
-
-  const connectWallet = async () => {
-
-  };
-
-  const disconnectWallet = () => {
-    setAccount(null);
-    setBalance(null);
   };
 
   return (
