@@ -12,9 +12,12 @@
   "dependencies": {
     "@reown/appkit": "1.7.5",
     "@reown/appkit-adapter-wagmi": "1.7.5",
+    "@tailwindcss/vite": "^4.1.7",
     "@tanstack/react-query": "^5.56.2",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "react-icons": "^5.5.0",
+    "tailwindcss": "^4.1.7",
     "viem": "^2.23.6",
     "wagmi": "^2.14.12"
   },
