@@ -188,10 +188,10 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50" onClick={handleClose}>
-      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto relative animate-[fadeIn_0.3s_ease-out]" onClick={(e) => e.stopPropagation()}>
-        <div className="p-6">
+      <div className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-screen overflow-y-auto relative animate-[fadeIn_0.3s_ease-out] py-12 sm:px-2" onClick={(e) => e.stopPropagation()}>
+        <div className="p-6 relative">
           <button
-            className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+            className="absolute top-5 right-4 text-gray-500 hover:text-gray-800"
             onClick={handleClose}
           >
             &times;
@@ -217,7 +217,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
           </div>
           {/* Modal Content */}
           <div className='space-y-8'>
-            <div className='kyc-step pl-10'>
+            <div className='kyc-step sm:pl-10'>
               <div className='flex items-start space-x-4'>
                 <div className='flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center'>
                   <span className='text-blue-600 font-bold'>1</span>
@@ -239,7 +239,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                 </div>
               </div>
             </div>
-            <div className='kyc-step pl-10'>
+            <div className='kyc-step sm:pl-10'>
               <div className='flex items-start space-x-4'>
                 <div className='flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center'>
                   <span className='text-blue-600 font-bold'>2</span>
@@ -319,7 +319,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                 </div>
               </div>
             </div>
-            <div className='kyc-step pl-10'>
+            <div className='kyc-step sm:pl-10'>
               <div className='flex items-start space-x-4'>
                 <div className='flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center'>
                   <span className='text-blue-600 font-bold'>3</span>
@@ -351,7 +351,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                 </div>
               </div>
             </div>
-            <div className='kyc-step pl-10'>
+            <div className='kyc-step sm:pl-10'>
               <div className='flex items-start space-x-4'>
                 <div className='flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center'>
                   <span className='text-blue-600 font-bold'>3</span>
