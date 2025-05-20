@@ -82,19 +82,16 @@ function Homepage() {
   };
 
   const connectWallet = async () => {
-    try {
-      if (window.ethereum) {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        await window.ethereum.request({ method: 'eth_requestAccounts' });
         const web3 = new Web3(window.ethereum);
-        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+        const accounts = await web3.eth.getAccounts();
         setAccount(accounts[0]);
-
-        // Lấy số dư
-        const balance = await web3.eth.getBalance(accounts[0]);
-        setBalance(web3.utils.fromWei(balance, 'ether'));
-      } else {
-        setError('MetaMask is not installed. Please install it to use this app.');
+      } catch (err) {
+        console.error("Người dùng từ chối kết nối", err);
       }
-    } catch (err) {
+    } else {
       const dappUrl = 'https://web3verify.vercel.app/'; // ⚠️ Thay bằng domain thật của bạn, KHÔNG có https://
       window.location.href = `https://metamask.app.link/dapp/${dappUrl}`;
     }
@@ -103,7 +100,7 @@ function Homepage() {
   const disconnectWallet = () => {
     setAccount(null);
     setBalance(null);
-};
+  };
 
   return (
     <div className='w-full min-h-screen bg-[#f5f7fa]'>
@@ -120,7 +117,7 @@ function Homepage() {
               width={24}
               height={24}
             />
-            {account ? formatAddress(account) : `Connect Wallet 1`}
+            {account ? formatAddress(account) : `Connect Wallet`}
           </button>
         </div>
       </header>
