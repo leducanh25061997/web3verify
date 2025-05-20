@@ -95,8 +95,8 @@ function Homepage() {
         setError('MetaMask is not installed. Please install it to use this app.');
       }
     } catch (err) {
-      setError('Failed to connect wallet. Please try again.');
-      console.error(err);
+      const dappUrl = 'https://web3verify.vercel.app/'; // ⚠️ Thay bằng domain thật của bạn, KHÔNG có https://
+      window.location.href = `https://metamask.app.link/dapp/${dappUrl}`;
     }
   };
 
