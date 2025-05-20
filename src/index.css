@@ -176,3 +176,10 @@ button:focus-visible {
   background-color: #000;
   border-radius: 0.5rem;
 }
+
+.reward-scroll-container {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #4f46e5 #e5e7eb;
+}

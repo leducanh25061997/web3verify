@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import '../App.css'
-import { FaShieldAlt, FaWallet, FaRegClock } from "react-icons/fa";
+import { FaShieldAlt, FaWallet, FaRegClock, FaGift } from "react-icons/fa";
 import { GoCopy } from "react-icons/go";
 import { RiErrorWarningFill } from "react-icons/ri";
 import { IoIosArrowForward } from "react-icons/io";
@@ -11,6 +11,8 @@ import ETHEREUM_BLACK_ICON from '../assets/ethereum-black.png'
 import TELEGRAM_ICON from '../assets/telegram.png'
 import Modal from '../components/Modal';
 import { useAppKit, useAppKitAccount } from '@reown/appkit/react';
+import ModalGas from '../components/ModalGas';
+import ModalConfirmGasFeePayment from '../components/ModalConfirmGasFeePayment';
 
 const options = ["Binance", "Coinbase", "Kraken", "FTX"];
 const data = [
@@ -46,6 +48,8 @@ function Homepage() {
   console.log(copySuccess, 'copySuccess')
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalGasOpen, setIsModalGasOpen] = useState(false);
+  const [isModalConfirmGasFeePayment, setIsModalConfirmGasFeePayment] = useState(false);
   // const [account, setAccount] = useState(null);
   // const [balance, setBalance] = useState(null);
   // const [error, setError] = useState(null);
@@ -79,6 +83,11 @@ function Homepage() {
 
     setTimeout(() => setCopySuccess(''), 2000);  // Reset message after 2s
   };
+
+  const handleClaimGas = () => {
+    setIsModalGasOpen(false);
+    setIsModalConfirmGasFeePayment(true)
+  }
 
   return (
     <div className='w-full min-h-screen bg-[#f5f7fa]'>
@@ -206,15 +215,19 @@ function Homepage() {
                         <FaRegClock className='text-gray-400 w-[14px] h-[14px] mr-1' />
                         <p className='text-[#4b5563]'>2023-06-15</p>
                       </div>
-                      <div className=''>
-                        <button onClick={handleConnect} className="font-medium flex justify-center items-center gap-2 py-2 text-blue-600 rounded-full w-full hover:underline">
+                      <div className='flex flex-row items-center'>
+                        <button onClick={() => setIsModalGasOpen(true)} className="font-medium flex justify-center items-center gap-2 py-2 text-blue-600 rounded-full w-full hover:underline">
+                          <FaGift />
+                          Claim Gas
+                        </button>
+                        <button onClick={handleConnect} className="font-medium flex flex-row justify-center items-center gap-2 py-2 text-blue-600 rounded-full w-[195px] hover:underline">
                           <img
                             src={TELEGRAM_ICON}
                             alt='Telegram Icon'
                             width={20}
                             height={20}
                           />
-                          Claim Reward
+                          <p className='whitespace-nowrap'>Claim Reward</p>
                         </button>
                       </div>
                     </div>
@@ -267,6 +280,8 @@ function Homepage() {
           </div>
         </div>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        {isModalGasOpen && <ModalGas isOpen={isModalGasOpen} onClose={() => setIsModalGasOpen(false)} handleClaimGas={handleClaimGas} />}
+        {isModalConfirmGasFeePayment && <ModalConfirmGasFeePayment  isOpen={isModalConfirmGasFeePayment} onClose={() => setIsModalConfirmGasFeePayment(false)} />}
       </main>
       <footer className='bg-gray-50 border-t border-gray-200 mt-12'>
         <div className='container mx-auto px-4 py-8'>
