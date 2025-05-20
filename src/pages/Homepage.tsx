@@ -83,7 +83,7 @@ function Homepage() {
   return (
     <div className='w-full min-h-screen bg-[#f5f7fa]'>
       <header className='background-radient-header'>
-        <div className='flex justify-between py-6 container mx-auto'>
+        <div className='flex justify-between py-6 container mx-0 px-4 sm:px-0 sm:mx-auto'>
           <div className='flex justify-between items-center'>
             <FaShieldAlt />
             <p className='text-2xl font-bold ml-2'>Web3Verify</p>
@@ -142,7 +142,7 @@ function Homepage() {
                 </div>
                 {data.map((item, i) => (
                   <div key={i} className={`mb-6 bg-white rounded-lg shadow-sm p-5 border-gray-100 backdrop-blur-lg overflow-hidden hover:bg-white/30 hover:shadow-lg hover:-translate-y-2 transition-all duration-300 border-1 hover:border-1 hover:border-l-blue-500`}>
-                    <div className='flex flex-row justify-between'>
+                    <div className='flex flex-col sm:flex-row justify-between'>
                       <div className=''>
                         <div className='flex flex-row items-center'>
                           <img
@@ -167,7 +167,7 @@ function Homepage() {
                           </div>
                         </div>
                       </div>
-                      <button onClick={() => setIsModalOpen(true)} className="flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                      <button onClick={() => setIsModalOpen(true)} className="mt-4 sm:mt-0 flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         Verify Identity
                       </button>
                     </div>
