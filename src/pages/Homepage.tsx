@@ -176,7 +176,7 @@ function Homepage() {
                           </div>
                         </div>
                       </div>
-                      <button onClick={() => setIsModalOpen(true)} className="mt-4 sm:mt-0 flex items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                      <button onClick={() => setIsModalOpen(true)} className="mt-4 sm:mt-0 flex justify-center items-center bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                         Verify Identity
                       </button>
                     </div>

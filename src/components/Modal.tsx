@@ -10,8 +10,12 @@ interface Props {
 }
 
 const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3c2b1a' }: Props) => {
-  const [file, setFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState<any>(null);
+  // const [file, setFile] = useState(null);
+  const [fileFrontkSide, setFileFrontSide] = useState<any>(null);
+  const [fileBackSide, setFileBackSide] = useState<any>(null);
+  // const [previewUrl, setPreviewUrl] = useState<any>(null);
+  const [previewFrontSideUrl, setPreviewFrontsideUrl] = useState<any>(null);
+  const [previewBackSideUrl, setPreviewBackSideUrl] = useState<any>(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   // const videoRef: any = useRef(null);
   // const videoRef1: any = useRef(null);
@@ -19,23 +23,26 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
   // const [isCameraOn, setIsCameraOn] = useState<boolean>(false);
   // const [isCameraOn1, setIsCameraOn1] = useState<boolean>(false);
 
+  const [countdown, setCountdown] = useState(0); // 0 nghĩa là chưa đếm
+  const [isRunning, setIsRunning] = useState(false);
+
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [recording, setRecording] = useState(false);
   // const [videoUrl, setVideoUrl] = useState<string | null>(null);
   const chunks = useRef<Blob[]>([]);
 
-  const videoRef1 = useRef<HTMLVideoElement | null>(null);
-  const mediaRecorderRef1 = useRef<MediaRecorder | null>(null);
-  const [recording1, setRecording1] = useState(false);
+  // const videoRef1 = useRef<HTMLVideoElement | null>(null);
+  // const mediaRecorderRef1 = useRef<MediaRecorder | null>(null);
+  // const [recording1, setRecording1] = useState(false);
   // const [videoUrl1, setVideoUrl1] = useState<string | null>(null);
-  const chunks1 = useRef<Blob[]>([]);
+  // const chunks1 = useRef<Blob[]>([]);
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
-      setRecording1(false);
+      // setRecording1(false);
       setRecording(false);
       document.body.style.overflow = 'auto';
     }
@@ -46,14 +53,37 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
     };
   }, [isOpen]);
 
-  const handleFileChange = (event: any) => {
+  useEffect(() => {
+    let timer: number | undefined;
+    if (isRunning && countdown > 0) {
+      timer = setTimeout(() => {
+        setCountdown(prev => prev - 1);
+      }, 1000);
+    } else if (countdown === 0 && isRunning) {
+      // Hết giờ
+      setIsRunning(false);
+      mediaRecorderRef.current?.stop();
+      setRecording(false);
+      // alert("Countdown finished!");
+    }
+    return () => clearTimeout(timer);
+  }, [countdown, isRunning]);
+
+  const handleFileChange = (event: any, type: string) => {
     const selectedFile = event.target.files[0];
     if (!selectedFile) return;
 
     // Tạo URL cho preview
     const preview = URL.createObjectURL(selectedFile);
-    setFile(selectedFile);
-    setPreviewUrl(preview);
+    if (type === "FRONT_SIDE") {
+      setFileFrontSide(selectedFile)
+      setPreviewFrontsideUrl(preview);
+    } else {
+      setFileBackSide(selectedFile);
+      setPreviewBackSideUrl(preview)
+    }
+    // setFile(selectedFile);
+    // setPreviewUrl(preview);
     setUploadProgress(0);  // Reset progress bar
   };
 
@@ -98,8 +128,8 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
   const handleClose = () => {
     onClose();
     mediaRecorderRef.current?.stop();
-    mediaRecorderRef1.current?.stop();
-    setRecording1(false);
+    // mediaRecorderRef1.current?.stop();
+    // setRecording1(false);
     setRecording(false);
   }
 
@@ -139,50 +169,52 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
   };
 
   const stopRecording = () => {
-    mediaRecorderRef.current?.stop();
-    setRecording(false);
+    setCountdown(10);
+    setIsRunning(true);
+    // mediaRecorderRef.current?.stop();
+    // setRecording(false);
   };
 
 
-  const startRecording1 = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+  // const startRecording1 = async () => {
+  //   try {
+  //     const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
 
-      if (videoRef1.current) {
-        videoRef1.current.srcObject = stream;
-        videoRef1.current.play();
-      }
+  //     if (videoRef1.current) {
+  //       videoRef1.current.srcObject = stream;
+  //       videoRef1.current.play();
+  //     }
 
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef1.current = mediaRecorder;
-      chunks1.current = [];
+  //     const mediaRecorder = new MediaRecorder(stream);
+  //     mediaRecorderRef1.current = mediaRecorder;
+  //     chunks1.current = [];
 
-      mediaRecorder.ondataavailable = (event: BlobEvent) => {
-        if (event.data.size > 0) {
-          chunks1.current.push(event.data);
-        }
-      };
+  //     mediaRecorder.ondataavailable = (event: BlobEvent) => {
+  //       if (event.data.size > 0) {
+  //         chunks1.current.push(event.data);
+  //       }
+  //     };
 
-      mediaRecorder.onstop = () => {
-        // const blob = new Blob(chunks1.current, { type: 'video/webm' });
-        // const url = URL.createObjectURL(blob);
-        // setVideoUrl1(url);
+  //     mediaRecorder.onstop = () => {
+  //       // const blob = new Blob(chunks1.current, { type: 'video/webm' });
+  //       // const url = URL.createObjectURL(blob);
+  //       // setVideoUrl1(url);
 
-        // Dừng stream
-        stream.getTracks().forEach(track => track.stop());
-      };
+  //       // Dừng stream
+  //       stream.getTracks().forEach(track => track.stop());
+  //     };
 
-      mediaRecorder.start();
-      setRecording1(true);
-    } catch (error) {
-      console.error('Error accessing media devices:', error);
-    }
-  };
+  //     mediaRecorder.start();
+  //     setRecording1(true);
+  //   } catch (error) {
+  //     console.error('Error accessing media devices:', error);
+  //   }
+  // };
 
-  const stopRecording1 = () => {
-    mediaRecorderRef1.current?.stop();
-    setRecording1(false);
-  };
+  // const stopRecording1 = () => {
+  //   mediaRecorderRef1.current?.stop();
+  //   setRecording1(false);
+  // };
 
   if (!isOpen) return null;
 
@@ -253,7 +285,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                           type="file"
                           id='frontUpload'
                           className="hidden"
-                          onChange={handleFileChange}
+                          onChange={e => handleFileChange(e, "FRONT_SIDE")}
                           accept="image/*"
                         />
                         <label htmlFor="frontUpload" className='cursor-pointer flex flex-col items-center'>
@@ -261,16 +293,16 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                           <p className='font-medium text-black'>Front Side</p>
                           <p className='text-xs text-gray-500 mt-1'>Click to upload</p>
                         </label>
-                        {previewUrl && (
+                        {previewFrontSideUrl && (
                           <div className='mt-2'>
                             <img
-                              src={previewUrl}
+                              src={previewFrontSideUrl}
                               alt="Preview"
                               className="w-full h-32 object-contain rounded"
                             />
                           </div>
                         )}
-                        {file && uploadProgress > 0 && (
+                        {/* {file && uploadProgress > 0 && (
                           <div className="w-full max-w-md bg-gray-200 rounded-full h-4 overflow-hidden">
                             <div
                               className="bg-blue-500 h-full text-xs text-white text-center rounded-full"
@@ -279,31 +311,31 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                               {uploadProgress}%
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                       <div className='file-upload rounded-lg p-6 text-center cursor-pointer'>
                         <input
                           type="file"
-                          id='frontUpload'
+                          id='backUpload'
                           className="hidden"
-                          onChange={handleFileChange}
+                          onChange={e => handleFileChange(e, "BACK_SIDE")}
                           accept="image/*"
                         />
-                        <label htmlFor="frontUpload" className='cursor-pointer flex flex-col items-center'>
+                        <label htmlFor="backUpload" className='cursor-pointer flex flex-col items-center'>
                           <FaRegImage className='text-2xl text-gray-600 mb-2' />
-                          <p className='font-medium text-black'>Front Side</p>
+                          <p className='font-medium text-black'>Back Side</p>
                           <p className='text-xs text-gray-500 mt-1'>Click to upload</p>
                         </label>
-                        {previewUrl && (
+                        {previewBackSideUrl && (
                           <div className='mt-2'>
                             <img
-                              src={previewUrl}
+                              src={previewBackSideUrl}
                               alt="Preview"
                               className="w-full h-32 object-contain rounded"
                             />
                           </div>
                         )}
-                        {file && uploadProgress > 0 && (
+                        {/* {file && uploadProgress > 0 && (
                           <div className="w-full max-w-md bg-gray-200 rounded-full h-4 overflow-hidden">
                             <div
                               className="bg-blue-500 h-full text-xs text-white text-center rounded-full"
@@ -312,7 +344,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                               {uploadProgress}%
                             </div>
                           </div>
-                        )}
+                        )} */}
                       </div>
                     </div>
                   </div>
@@ -333,7 +365,17 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                         {!recording ? (
                           <button className='bg-white text-blue-600 px-4 rounded-lg font-medium flex fle-row items-center py-2' onClick={startRecording}>🎬 Bắt đầu quay</button>
                         ) : (
-                          <button className='border border-gray-300 rounded-lg font-medium flex fle-row items-center py-2 px-4' onClick={stopRecording}>⏹ Dừng quay</button>
+                          <button
+                            onClick={stopRecording}
+                            disabled={isRunning}
+                            className={`px-5 py-2 border border-gray-300 rounded-lg transition duration-300 text-white font-semibold ${isRunning
+                                ? "bg-transparent hover:bg-gray-400 hover:border hover:border-black"
+                                : "bg-transparent hover:bg-blue-700"
+                              }`}
+                          >
+                            {isRunning ? `Wait ${countdown}s` : "⏹ Dừng quay"}
+                          </button>
+                          // <button className='border border-gray-300 rounded-lg font-medium flex fle-row items-center py-2 px-4' onClick={stopRecording}>⏹ Dừng quay</button>
                         )}
                       </div>
                       {/* {videoUrl && (
@@ -351,7 +393,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                 </div>
               </div>
             </div>
-            <div className='kyc-step sm:pl-10'>
+            {/* <div className='kyc-step sm:pl-10'>
               <div className='flex items-start space-x-4'>
                 <div className='flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center'>
                   <span className='text-blue-600 font-bold'>3</span>
@@ -375,7 +417,7 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
           {/* {children} */}
 

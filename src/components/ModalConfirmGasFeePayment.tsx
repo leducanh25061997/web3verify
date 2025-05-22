@@ -8,7 +8,7 @@ interface Props {
 }
 
 const ModalConfirmGasFeePayment = ({ isOpen, onClose }: Props) => {
-  const [seconds, setSeconds] = useState<number>(30);
+  const [seconds, setSeconds] = useState<number>(60);
 
   useEffect(() => {
     if (seconds === 0) return;
