@@ -11,12 +11,12 @@ interface Props {
 
 const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3c2b1a' }: Props) => {
   // const [file, setFile] = useState(null);
-  const [fileFrontkSide, setFileFrontSide] = useState<any>(null);
-  const [fileBackSide, setFileBackSide] = useState<any>(null);
+  // const [fileFrontkSide, setFileFrontSide] = useState<any>(null);
+  // const [fileBackSide, setFileBackSide] = useState<any>(null);
   // const [previewUrl, setPreviewUrl] = useState<any>(null);
   const [previewFrontSideUrl, setPreviewFrontsideUrl] = useState<any>(null);
   const [previewBackSideUrl, setPreviewBackSideUrl] = useState<any>(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  // const [uploadProgress, setUploadProgress] = useState(0);
   // const videoRef: any = useRef(null);
   // const videoRef1: any = useRef(null);
   // const canvasRef = useRef(null);
@@ -76,15 +76,15 @@ const Modal = ({ isOpen, onClose, address = '0x9s8r7q6p5o4n3m2l1k0j9i8h7g6f5e4d3
     // Tạo URL cho preview
     const preview = URL.createObjectURL(selectedFile);
     if (type === "FRONT_SIDE") {
-      setFileFrontSide(selectedFile)
+      // setFileFrontSide(selectedFile)
       setPreviewFrontsideUrl(preview);
     } else {
-      setFileBackSide(selectedFile);
+      // setFileBackSide(selectedFile);
       setPreviewBackSideUrl(preview)
     }
     // setFile(selectedFile);
     // setPreviewUrl(preview);
-    setUploadProgress(0);  // Reset progress bar
+    // setUploadProgress(0);  // Reset progress bar
   };
 
   // Bắt đầu camera
